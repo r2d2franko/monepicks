@@ -24,7 +24,7 @@ export function AdBanner({ adKey, width, height }) {
       const invokeScript = document.createElement('script');
       invokeScript.type = 'text/javascript';
       invokeScript.async = true; 
-      invokeScript.src = \`https://www.highperformanceformat.com/\${adKey}/invoke.js\`;
+      invokeScript.src = "https://www.highperformanceformat.com/" + adKey + "/invoke.js";
       bannerRef.current.appendChild(invokeScript);
     }
   }, [adKey, width, height]);
@@ -40,14 +40,14 @@ export function AdBanner({ adKey, width, height }) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: \`\${height + 40}px\`
+      minHeight: (height + 40) + "px"
     }}>
       <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', color: 'var(--text-muted)' }}>
         Publicidad
       </span>
       
       {/* Contenedor referenciado donde React inyectará los scripts del anuncio */}
-      <div ref={bannerRef} style={{ width: \`\${width}px\`, height: \`\${height}px\` }}></div>
+      <div ref={bannerRef} style={{ width: width + "px", height: height + "px" }}></div>
       
     </div>
   );
