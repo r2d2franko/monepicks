@@ -33,24 +33,7 @@ function App() {
     return matchesSearch && matchesDate;
   });
 
-  // Función para intercalar banners de publicidad
-  const renderContentWithAds = () => {
-    const content = [];
-    filteredPredictions.forEach((pred, index) => {
-      content.push(
-        <PredictionCard key={`pred-${index}`} prediction={pred} index={index} />
-      );
-      // Insertar AdBanner cada 4 predicciones
-      if ((index + 1) % 4 === 0 && index !== filteredPredictions.length - 1) {
-        content.push(
-          <div key={`ad-${index}`} style={{ gridColumn: '1 / -1' }}>
-            <AdBanner />
-          </div>
-        );
-      }
-    });
-    return content;
-  };
+  // Las predicciones filtradas ya las tenemos en filteredPredictions
 
   return (
     <>
@@ -115,8 +98,17 @@ function App() {
               </div>
             </div>
 
-            <div className="grid-cards">
-              {renderContentWithAds()}
+            <div className="main-layout">
+              <div className="grid-cards" style={{ marginTop: 0 }}>
+                {filteredPredictions.map((pred, index) => (
+                  <PredictionCard key={`pred-${index}`} prediction={pred} index={index} />
+                ))}
+              </div>
+              
+              <aside style={{ position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <AdBanner />
+                <AdBanner />
+              </aside>
             </div>
           </>
         )}
