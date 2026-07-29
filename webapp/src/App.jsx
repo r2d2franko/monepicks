@@ -16,6 +16,14 @@ function App() {
     const fetchData = async () => {
       const data = await loadPredictions();
       setPredictions(data);
+      
+      // Obtener la fecha más reciente y establecerla por defecto
+      const dates = data.map(p => p.fecha).filter(Boolean);
+      if (dates.length > 0) {
+        dates.sort((a, b) => (a > b ? -1 : 1)); // Orden descendente
+        setSelectedDate(dates[0]);
+      }
+      
       setLoading(false);
     };
     fetchData();
@@ -81,19 +89,16 @@ function App() {
                   border: '1px solid var(--card-border)', borderRadius: '8px', padding: '0.5rem 1rem', flex: '1 1 200px'
                 }}>
                   <Calendar size={18} color="var(--text-muted)" style={{ marginRight: '0.5rem' }} />
-                  <select
+                  <input
+                    type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     style={{
                       background: 'transparent', border: 'none', color: 'var(--text-main)',
-                      outline: 'none', width: '100%', fontSize: '0.875rem', cursor: 'pointer'
+                      outline: 'none', width: '100%', fontSize: '0.875rem', cursor: 'pointer',
+                      colorScheme: 'dark'
                     }}
-                  >
-                    <option value="" style={{ background: 'var(--bg-color)' }}>Todas las fechas</option>
-                    {uniqueDates.map(date => (
-                      <option key={date} value={date} style={{ background: 'var(--bg-color)' }}>{date}</option>
-                    ))}
-                  </select>
+                  />
                 </div>
               </div>
             </div>

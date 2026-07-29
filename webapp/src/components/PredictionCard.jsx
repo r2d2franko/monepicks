@@ -37,11 +37,18 @@ export function PredictionCard({ prediction, index }) {
           </span>
         </div>
 
+        <div style={{ textAlign: 'center', marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
+          <p style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, color: 'var(--text-main)' }}>{prediction.partido}</p>
+          <p style={{ fontSize: '0.75rem', margin: 0, color: 'var(--text-muted)' }}>{prediction.fecha}</p>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             <img src={localLogo} alt={localName} style={{ width: '64px', height: '64px', objectFit: 'contain', marginBottom: '0.5rem' }} />
             <span style={{ fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>{localName}</span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{prediction.era_local || '-'}</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.25rem' }}>
+              {prediction.abridor_local} <br/> (ERA: {prediction.era_local || '-'})
+            </span>
           </div>
           
           <div style={{ padding: '0 1rem', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-muted)' }}>
@@ -51,7 +58,9 @@ export function PredictionCard({ prediction, index }) {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             <img src={visitaLogo} alt={visitaName} style={{ width: '64px', height: '64px', objectFit: 'contain', marginBottom: '0.5rem' }} />
             <span style={{ fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>{visitaName}</span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{prediction.era_visitante || '-'}</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.25rem' }}>
+              {prediction.abridor_visitante} <br/> (ERA: {prediction.era_visitante || '-'})
+            </span>
           </div>
         </div>
 
