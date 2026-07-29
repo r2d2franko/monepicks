@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export function AdBanner() {
+export function AdBanner({ adKey, width, height }) {
   const bannerRef = useRef(null);
 
   useEffect(() => {
@@ -11,10 +11,10 @@ export function AdBanner() {
       confScript.type = 'text/javascript';
       confScript.innerHTML = `
         atOptions = {
-          'key' : '5840104a941bb8f1db7198c8c9c6ec86',
+          'key' : '${adKey}',
           'format' : 'iframe',
-          'height' : 300,
-          'width' : 160,
+          'height' : ${height},
+          'width' : ${width},
           'params' : {}
         };
       `;
@@ -23,12 +23,11 @@ export function AdBanner() {
       // 2. Script que llama a los anuncios (invoke.js)
       const invokeScript = document.createElement('script');
       invokeScript.type = 'text/javascript';
-      // Hacemos que sea asíncrono para que no bloquee la carga de tu página
       invokeScript.async = true; 
-      invokeScript.src = "https://www.highperformanceformat.com/5840104a941bb8f1db7198c8c9c6ec86/invoke.js";
+      invokeScript.src = \`https://www.highperformanceformat.com/\${adKey}/invoke.js\`;
       bannerRef.current.appendChild(invokeScript);
     }
-  }, []);
+  }, [adKey, width, height]);
 
   return (
     <div style={{
@@ -41,15 +40,14 @@ export function AdBanner() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      margin: '1.5rem 0',
-      minHeight: '320px' // Ajustado para que quepa el alto de 300px del anuncio
+      minHeight: \`\${height + 40}px\`
     }}>
       <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', color: 'var(--text-muted)' }}>
         Publicidad
       </span>
       
       {/* Contenedor referenciado donde React inyectará los scripts del anuncio */}
-      <div ref={bannerRef} style={{ width: '160px', height: '300px' }}></div>
+      <div ref={bannerRef} style={{ width: \`\${width}px\`, height: \`\${height}px\` }}></div>
       
     </div>
   );

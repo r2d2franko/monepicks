@@ -106,8 +106,8 @@ function App() {
               </div>
               
               <aside style={{ position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <AdBanner />
-                <AdBanner />
+                <AdBanner adKey="5840104a941bb8f1db7198c8c9c6ec86" width={160} height={300} />
+                <AdBanner adKey="c712cba54a045cd9332b6c733bffd699" width={160} height={600} />
               </aside>
             </div>
           </>
