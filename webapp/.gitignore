@@ -1,24 +1,27 @@
-# Logs
-logs
-*.log
+# Dependencias de Node (instaladas localmente en el VPS)
+node_modules/
+.pnpm-store/
+
+# Archivos de entorno y secretos
+.env
+.env.local
+.env.*.local
+
+# Salidas de construcción / compilación de Vite
+dist/
+dist-zip/
+build/
+.vite/
+
+# Logs de error e instalaciones de npm/yarn/pnpm
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
+.npm/
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Caché del sistema y editores
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+.idea/
+.vscode/
