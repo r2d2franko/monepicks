@@ -1,34 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
-export function AdBanner({ adKey, width, height }) {
-  const bannerRef = useRef(null);
-
-  useEffect(() => {
-    // Nos aseguramos de que el contenedor exista y esté vacío para no inyectar el script varias veces en re-renders
-    if (bannerRef.current && !bannerRef.current.hasChildNodes()) {
-      // 1. Script de configuración (atOptions)
-      const confScript = document.createElement('script');
-      confScript.type = 'text/javascript';
-      confScript.innerHTML = `
-        atOptions = {
-          'key' : '${adKey}',
-          'format' : 'iframe',
-          'height' : ${height},
-          'width' : ${width},
-          'params' : {}
-        };
-      `;
-      bannerRef.current.appendChild(confScript);
-
-      // 2. Script que llama a los anuncios (invoke.js)
-      const invokeScript = document.createElement('script');
-      invokeScript.type = 'text/javascript';
-      invokeScript.async = true; 
-      invokeScript.src = "https://www.highperformanceformat.com/" + adKey + "/invoke.js";
-      bannerRef.current.appendChild(invokeScript);
-    }
-  }, [adKey, width, height]);
-
+export function AdBanner({ htmlFile, width, height }) {
   return (
     <div style={{
       width: '100%',
@@ -46,8 +18,16 @@ export function AdBanner({ adKey, width, height }) {
         Publicidad
       </span>
       
-      {/* Contenedor referenciado donde React inyectará los scripts del anuncio */}
-      <div ref={bannerRef} style={{ width: width + "px", height: height + "px" }}></div>
+      {/* Cargamos el HTML del anuncio en un iframe aislado */}
+      <iframe 
+        src={`/banners/${htmlFile}`}
+        width={width}
+        height={height}
+        frameBorder="0"
+        scrolling="no"
+        style={{ border: 'none', overflow: 'hidden' }}
+        title="Advertisement"
+      ></iframe>
       
     </div>
   );
