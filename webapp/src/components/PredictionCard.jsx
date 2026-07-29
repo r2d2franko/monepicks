@@ -13,7 +13,7 @@ export function PredictionCard({ prediction, index }) {
 
   return (
     <>
-      <div 
+      <article 
         className="glass animate-fade-in" 
         style={{ 
           padding: '1.5rem',
@@ -92,7 +92,7 @@ export function PredictionCard({ prediction, index }) {
         >
           Ver Análisis Completo
         </button>
-      </div>
+      </article>
 
       {/* Modal de Análisis */}
       {showModal && (

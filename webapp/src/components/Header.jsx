@@ -17,9 +17,9 @@ export function Header() {
       <div style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
           <TrendingUp size={28} color="var(--accent)" strokeWidth={2.5} />
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.025em', margin: 0, color: 'white' }}>
+          <div style={{ fontSize: '1.5rem', fontWeight: 800, letterSpacing: '-0.025em', margin: 0, color: 'white' }}>
             Mone<span style={{ color: 'var(--text-main)' }}>Picks</span>
-          </h1>
+          </div>
         </div>
         
         <nav style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-muted)' }}>
