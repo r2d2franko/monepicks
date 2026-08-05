@@ -3,13 +3,26 @@ import { getTeamLogo } from '../utils/getMlbLogo';
 
 export function PredictionCard({ prediction, index }) {
   const [showModal, setShowModal] = useState(false);
-  const prob = parseInt(prediction.probabilidad) || 0;
+  const prob = prediction.probabilidad_normalizada || 0;
   
   const localName = prediction.equipo_local || 'Local';
   const visitaName = prediction.equipo_visitante || 'Visitante';
   
   const localLogo = getTeamLogo(localName);
   const visitaLogo = getTeamLogo(visitaName);
+
+  const isNoPlay = prediction.evaluacion_es === 'NO_PLAY';
+
+  // Obtener color según evaluación
+  const getBadgeColor = (evalText) => {
+    if (!evalText || evalText === 'NO_PLAY') return 'var(--text-muted)';
+    if (evalText.includes('⭐⭐⭐⭐⭐')) return 'var(--success)';
+    if (evalText.includes('⭐⭐⭐⭐')) return '#3b82f6'; // Azul
+    if (evalText.includes('⭐⭐⭐')) return '#8b5cf6'; // Morado
+    return 'var(--warning)'; // Para partidos cerrados o de 1/2 estrellas
+  };
+
+  const badgeColor = getBadgeColor(prediction.evaluacion_es);
 
   return (
     <>
@@ -24,16 +37,23 @@ export function PredictionCard({ prediction, index }) {
           background: 'var(--card-bg)',
           border: '1px solid var(--card-border)',
           borderRadius: '16px',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          opacity: isNoPlay ? 0.7 : 1,
+          filter: isNoPlay ? 'grayscale(0.5)' : 'none'
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <img src="https://cdn-icons-png.flaticon.com/512/820/820556.png" alt="MLB" style={{ width: '16px', height: '16px', filter: 'invert(1)' }} />
             <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-main)' }}>MLB</span>
+            {isNoPlay && (
+              <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', background: 'var(--danger)', color: '#fff', borderRadius: '4px', fontWeight: 'bold' }}>
+                No Recomendada
+              </span>
+            )}
           </div>
           <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', color: 'var(--text-muted)' }}>
-            {prediction.mercado}
+            {prediction.mercado_es || prediction.mercado}
           </span>
         </div>
 
@@ -65,16 +85,42 @@ export function PredictionCard({ prediction, index }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+          {!isNoPlay && prediction.evaluacion_es && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: badgeColor, flexShrink: 0 }}></span>
+              <span style={{ fontSize: '0.8rem', color: badgeColor, fontWeight: 600 }}>{prediction.evaluacion_es}</span>
+            </div>
+          )}
+          
           <p style={{ fontSize: '0.875rem', margin: 0 }}>
-            <span style={{ color: 'var(--text-muted)' }}>Predicción: </span>
-            <strong style={{ color: 'var(--accent)' }}>{prediction.prediccion}</strong> 
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}> (AI: {prob}%)</span>
+            <span style={{ color: 'var(--text-muted)' }}>Pick: </span>
+            <strong style={{ color: isNoPlay ? 'var(--text-muted)' : 'var(--accent)' }}>
+              {isNoPlay ? 'N/A' : prediction.prediccion_normalizada}
+            </strong> 
+            {!isNoPlay && (
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}> 
+                ({prediction.mercado === 'Ganador del partido' ? 'Solidez' : 'Prob'}: {prob}%)
+              </span>
+            )}
           </p>
           
-          {prediction.resumen_apuesta && (
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              <span style={{ fontWeight: 600 }}>Análisis: </span>
-              {prediction.resumen_apuesta}
+          {/* Barra de probabilidad visual */}
+          {!isNoPlay && prob > 0 && (
+            <div className="prob-bar-wrapper">
+              <div
+                className="prob-bar-fill"
+                style={{
+                  width: prob + '%',
+                  background: prob >= 75 ? 'var(--success)' : prob >= 55 ? 'var(--warning)' : 'var(--danger)'
+                }}
+              />
+            </div>
+          )}
+
+          {/* Estadio */}
+          {prediction.estadio && (
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span>📍</span>{prediction.estadio}
             </p>
           )}
         </div>
@@ -85,7 +131,7 @@ export function PredictionCard({ prediction, index }) {
             marginTop: '1rem',
             width: '100%',
             padding: '0.75rem',
-            background: 'var(--accent)',
+            background: isNoPlay ? 'rgba(255,255,255,0.1)' : 'var(--accent)',
             color: '#fff',
             border: 'none',
             borderRadius: '8px',
@@ -94,12 +140,16 @@ export function PredictionCard({ prediction, index }) {
             cursor: 'pointer',
             textTransform: 'uppercase',
             transition: 'all 0.2s ease',
-            boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)'
+            boxShadow: isNoPlay ? 'none' : '0 4px 10px rgba(16, 185, 129, 0.2)'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.background = 'var(--accent-hover)'}
-          onMouseLeave={(e) => e.currentTarget.style.background = 'var(--accent)'}
+          onMouseEnter={(e) => {
+            if(!isNoPlay) e.currentTarget.style.background = 'var(--accent-hover)'
+          }}
+          onMouseLeave={(e) => {
+            if(!isNoPlay) e.currentTarget.style.background = 'var(--accent)'
+          }}
         >
-          Ver Análisis Completo
+          {isNoPlay ? 'Ver Datos' : 'Ver Análisis Completo'}
         </button>
       </article>
 
@@ -121,7 +171,7 @@ export function PredictionCard({ prediction, index }) {
           <div 
             style={{
               background: 'var(--bg-color)',
-              border: '1px solid var(--accent)',
+              border: `1px solid ${isNoPlay ? 'var(--card-border)' : 'var(--accent)'}`,
               padding: '2rem',
               borderRadius: '16px',
               maxWidth: '600px',
@@ -132,50 +182,83 @@ export function PredictionCard({ prediction, index }) {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--text-main)', borderBottom: '1px solid var(--card-border)', paddingBottom: '0.5rem' }}>
-              Reporte Completo: {prediction.partido}
-            </h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', borderBottom: '1px solid var(--card-border)', paddingBottom: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.3rem', margin: 0, color: 'var(--text-main)' }}>
+                Reporte: {prediction.partido}
+              </h3>
+              {isNoPlay && (
+                 <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem', background: 'var(--danger)', color: '#fff', borderRadius: '12px', fontWeight: 'bold' }}>NO PLAY</span>
+              )}
+            </div>
             
-            {/* Grid de Estadísticas */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
               <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Selección / Pick</p>
-                <p style={{ fontWeight: 700, margin: 0, color: 'var(--accent)', fontSize: '1.1rem' }}>{prediction.prediccion}</p>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>Mercado: {prediction.mercado}</p>
+                <p style={{ fontWeight: 700, margin: 0, color: isNoPlay ? 'var(--text-muted)' : 'var(--accent)', fontSize: '1.1rem' }}>
+                  {isNoPlay ? 'NO RECOMENDADA' : prediction.prediccion_normalizada}
+                </p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>Mercado: {prediction.mercado_es || prediction.mercado}</p>
               </div>
               
               <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Datos del Modelo</p>
-                <p style={{ fontWeight: 600, margin: 0 }}>Probabilidad: {prob}%</p>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
-                  Confianza: <span style={{ color: 'var(--accent)' }}>{prediction.confianza}</span>
-                </p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Evaluación del Modelo</p>
+                {!isNoPlay ? (
+                  <>
+                    <p style={{ fontWeight: 600, margin: 0, color: badgeColor }}>{prediction.evaluacion_es}</p>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
+                      {prediction.mercado === 'Ganador del partido' 
+                        ? `Solidez del Modelo: ${prob}%` 
+                        : `Probabilidad: ${prob}% (Solidez: ${prediction.solidez_modelo || 0})`}
+                    </p>
+                  </>
+                ) : (
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0 }}>No hay evaluación suficiente para apostar.</p>
+                )}
               </div>
 
-              <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Abridores</p>
-                <p style={{ fontWeight: 500, margin: 0, fontSize: '0.9rem' }}>{localName}: {prediction.abridor_local} <span style={{color: 'var(--text-muted)'}}>(ERA: {prediction.era_local || '-'})</span></p>
-                <p style={{ fontWeight: 500, margin: '0.25rem 0 0 0', fontSize: '0.9rem' }}>{visitaName}: {prediction.abridor_visitante} <span style={{color: 'var(--text-muted)'}}>(ERA: {prediction.era_visitante || '-'})</span></p>
-              </div>
+              <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px', gridColumn: '1 / -1' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.5rem 0', textTransform: 'uppercase' }}>Datos Clave del Mercado</p>
+                
+                {prediction.mercado === 'Ganador del partido' && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)', padding: '0.75rem', borderRadius: '6px' }}>
+                    <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid var(--card-border)' }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{localName}</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.probabilidad_local || '-'}</span>
+                    </div>
+                    <div style={{ textAlign: 'center', flex: 1 }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{visitaName}</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.probabilidad_visitante || '-'}</span>
+                    </div>
+                  </div>
+                )}
 
-              <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Marcador Proyectado</p>
-                <p style={{ fontWeight: 700, margin: 0, fontSize: '1.25rem', color: 'var(--text-main)' }}>{prediction.marcador_proyectado || 'N/A'}</p>
+                {prediction.mercado === 'Más/Menos carreras' && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)', padding: '0.75rem', borderRadius: '6px' }}>
+                    <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid var(--card-border)' }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Línea Mercado (O/U)</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.linea_mercado_ou}</span>
+                    </div>
+                    <div style={{ textAlign: 'center', flex: 1 }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Carreras Esperadas</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.total_carreras_esperadas}</span>
+                    </div>
+                  </div>
+                )}
+
+                {prediction.mercado && prediction.mercado.includes('Ponches') && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)', padding: '0.75rem', borderRadius: '6px' }}>
+                    <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid var(--card-border)' }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Línea de Ponches ({prediction.pitcher_ponches})</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.linea_mercado_ponches}</span>
+                    </div>
+                    <div style={{ textAlign: 'center', flex: 1 }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Ponches Proyectados (IA)</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.ponches_proyectados}</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-
-            <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1.25rem', borderRadius: '8px', borderLeft: '4px solid var(--accent)', marginBottom: '1.5rem' }}>
-              <p style={{ fontWeight: 700, margin: '0 0 0.5rem 0', color: 'var(--text-main)' }}>Análisis del Tipster / IA</p>
-              <p style={{ lineHeight: 1.6, color: 'var(--text-muted)', margin: 0, fontSize: '0.95rem' }}>
-                {prediction.resumen_apuesta || 'No hay análisis detallado disponible para este partido.'}
-              </p>
-            </div>
-
-            {prediction.notas && (
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic', marginBottom: '1.5rem' }}>
-                * Notas extra: {prediction.notas}
-              </p>
-            )}
 
             <button 
               onClick={() => setShowModal(false)}
