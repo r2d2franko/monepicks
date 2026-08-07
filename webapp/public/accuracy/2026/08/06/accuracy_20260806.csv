@@ -1,0 +1,23 @@
+game_id,date,matchup,market,target,probability_pct,line_value,actual_value,actual_outcome,is_correct,is_push
+824804,2026-08-06,Los Angeles Angels @ Baltimore Orioles,MONEYLINE,home,84.77,0.0,4.0,away,False,False
+824804,2026-08-06,Los Angeles Angels @ Baltimore Orioles,TOTALS,UNDER,43.6,9.0,5.0,UNDER,True,False
+824481,2026-08-06,Athletics @ Cincinnati Reds,MONEYLINE,home,90.96,0.0,6.0,home,True,False
+824481,2026-08-06,Athletics @ Cincinnati Reds,TOTALS,OVER,50.64,9.0,11.0,OVER,True,False
+824401,2026-08-06,New York Mets @ Cleveland Guardians,MONEYLINE,away,67.08,0.0,13.0,away,True,False
+824401,2026-08-06,New York Mets @ Cleveland Guardians,TOTALS,UNDER,67.82,7.5,19.0,OVER,False,False
+823754,2026-08-06,Pittsburgh Pirates @ Milwaukee Brewers,MONEYLINE,home,77.68,0.0,5.0,home,True,False
+823754,2026-08-06,Pittsburgh Pirates @ Milwaukee Brewers,TOTALS,UNDER,52.08,8.0,7.0,UNDER,True,False
+824664,2026-08-06,Toronto Blue Jays @ Chicago Cubs,MONEYLINE,home,50.77,0.0,3.0,home,True,False
+824664,2026-08-06,Toronto Blue Jays @ Chicago Cubs,TOTALS,UNDER,67.98,6.0,5.0,UNDER,True,False
+823105,2026-08-06,Detroit Tigers @ Seattle Mariners,MONEYLINE,away,58.75,0.0,11.0,away,True,False
+823105,2026-08-06,Detroit Tigers @ Seattle Mariners,TOTALS,UNDER,43.04,7.0,11.0,OVER,False,False
+823430,2026-08-06,Washington Nationals @ Philadelphia Phillies,MONEYLINE,home,79.28,0.0,7.0,home,True,False
+823430,2026-08-06,Washington Nationals @ Philadelphia Phillies,TOTALS,UNDER,52.4,9.0,10.0,OVER,False,False
+824729,2026-08-06,Chicago White Sox @ Boston Red Sox,MONEYLINE,home,70.63,0.0,12.0,home,True,False
+824729,2026-08-06,Chicago White Sox @ Boston Red Sox,TOTALS,UNDER,44.96,7.5,23.0,OVER,False,False
+824885,2026-08-06,Miami Marlins @ Atlanta Braves,MONEYLINE,home,60.01,0.0,11.0,home,True,False
+824885,2026-08-06,Miami Marlins @ Atlanta Braves,TOTALS,UNDER,60.3,7.5,14.0,OVER,False,False
+824080,2026-08-06,Minnesota Twins @ Kansas City Royals,MONEYLINE,home,50.94,0.0,4.0,away,False,False
+824080,2026-08-06,Minnesota Twins @ Kansas City Royals,TOTALS,UNDER,51.2,8.0,7.0,UNDER,True,False
+825053,2026-08-06,San Diego Padres @ Arizona Diamondbacks,MONEYLINE,home,54.13,0.0,5.0,away,False,False
+825053,2026-08-06,San Diego Padres @ Arizona Diamondbacks,TOTALS,UNDER,54.6,8.5,6.0,UNDER,True,False
