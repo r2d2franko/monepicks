@@ -57,7 +57,7 @@ export function AccuracyDashboard() {
   }, [results, searchTerm, marketFilter, teamFilter]);
 
   const stats = useMemo(() => {
-    const valid = results.filter(r => !r.is_push && r.actual_outcome);
+    const valid = filteredResults.filter(r => !r.is_push && r.actual_outcome);
     const total = valid.length;
     const correct = valid.filter(r => r.is_correct).length;
     const incorrect = total - correct;
@@ -69,7 +69,7 @@ export function AccuracyDashboard() {
     const mlWinRate = moneylineValid.length > 0 ? Math.round((mlCorrect / moneylineValid.length) * 100) : 0;
 
     return { total, correct, incorrect, winRate, pushes, mlWinRate, mlTotal: moneylineValid.length };
-  }, [results]);
+  }, [filteredResults]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -127,7 +127,7 @@ export function AccuracyDashboard() {
                 transition: 'all 0.2s'
               }}
             >
-              {market === 'all' ? 'Todos los Mercados' : market === 'MONEYLINE' ? '🏆 Moneyline' : '📊 Totales (O/U)'}
+              {market === 'all' ? 'Todos' : market === 'MONEYLINE' ? '🏆 Ganador' : '📊 Más/Menos'}
             </button>
           ))}
         </div>
