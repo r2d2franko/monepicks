@@ -1,5 +1,13 @@
 import Papa from 'papaparse';
 
+export const getLocalDateString = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export const loadPredictions = async (dateString) => {
   if (!dateString) return [];
   const [year, month, day] = dateString.split('-');
@@ -26,6 +34,7 @@ export const loadPredictions = async (dateString) => {
           const normalized = results.data.map(row => {
             let prediccion = row.ganador_proyectado || '';
             let probabilidad = 0;
+            let probabilidad_pura = null;
             
             if (row.mercado === 'Más/Menos carreras') {
               prediccion = `${row.lado_recomendado_ou} ${row.linea_mercado_ou}`;
@@ -33,17 +42,20 @@ export const loadPredictions = async (dateString) => {
             } else if (row.mercado === 'Ganador del partido') {
               prediccion = row.ganador_proyectado;
               probabilidad = row.solidez_modelo;
+              probabilidad_pura = prediccion === row.equipo_local ? row.probabilidad_local : row.probabilidad_visitante;
             } else if (row.mercado && row.mercado.includes('Ponches')) {
               prediccion = `${row.pitcher_ponches} ${row.lado_recomendado_ponches} ${row.linea_mercado_ponches}`;
               probabilidad = row.lado_recomendado_ponches === 'OVER' ? row.probabilidad_over_ponches : row.probabilidad_under_ponches;
             }
 
             if (typeof probabilidad === 'string') probabilidad = parseFloat(probabilidad.replace('%', ''));
+            if (typeof probabilidad_pura === 'string') probabilidad_pura = parseFloat(probabilidad_pura.replace('%', ''));
             
             return {
               ...row,
               prediccion_normalizada: prediccion,
-              probabilidad_normalizada: Math.round(probabilidad || 0)
+              probabilidad_normalizada: Math.round(probabilidad || 0),
+              probabilidad_pura: probabilidad_pura ? Math.round(probabilidad_pura) : null
             };
           });
           resolve(normalized);

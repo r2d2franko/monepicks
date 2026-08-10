@@ -3,7 +3,7 @@ import { Header } from './components/Header';
 import { PredictionCard } from './components/PredictionCard';
 import { AdBanner } from './components/AdBanner';
 import { AccuracyDashboard } from './components/AccuracyDashboard';
-import { loadPredictions } from './utils/csvParser';
+import { loadPredictions, getLocalDateString } from './utils/csvParser';
 import { getTeamLogo } from './utils/getMlbLogo';
 import { Search, Calendar, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import './styles/global.css';
@@ -50,7 +50,7 @@ function App() {
   const [predictions, setPredictions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(() => getLocalDateString());
   const [marketFilter, setMarketFilter] = useState('all');
   const [starFilter, setStarFilter] = useState('all');
   const [hideNoPlay, setHideNoPlay] = useState(true);
