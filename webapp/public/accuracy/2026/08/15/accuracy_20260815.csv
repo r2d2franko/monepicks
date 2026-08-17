@@ -1,0 +1,29 @@
+game_id,date,matchup,market,target,probability_pct,line_value,actual_value,actual_outcome,is_correct,is_push
+824239,2026-08-15,Chicago White Sox @ Detroit Tigers,MONEYLINE,Detroit Tigers,65.0,0.0,4 a 3 (V-L),away,False,False
+824239,2026-08-15,Chicago White Sox @ Detroit Tigers,TOTALS,UNDER,88.4,8.0,7.0,UNDER,True,False
+824644,2026-08-15,St. Louis Cardinals @ Chicago Cubs,MONEYLINE,Chicago Cubs,66.3,0.0,8 a 4 (V-L),away,False,False
+824644,2026-08-15,St. Louis Cardinals @ Chicago Cubs,TOTALS,UNDER,76.2,9.0,12.0,OVER,False,False
+822775,2026-08-15,New York Yankees @ Toronto Blue Jays,MONEYLINE,New York Yankees,56.9,0.0,1 a 4 (V-L),home,False,False
+822775,2026-08-15,New York Yankees @ Toronto Blue Jays,TOTALS,UNDER,76.1,7.5,5.0,UNDER,True,False
+823184,2026-08-15,Colorado Rockies @ San Francisco Giants,MONEYLINE,San Francisco Giants,65.7,0.0,1 a 7 (V-L),home,True,False
+823184,2026-08-15,Colorado Rockies @ San Francisco Giants,TOTALS,OVER,79.7,7.5,8.0,OVER,True,False
+823588,2026-08-15,Washington Nationals @ New York Mets,MONEYLINE,New York Mets,50.1,0.0,4 a 5 (V-L),home,True,False
+823588,2026-08-15,Washington Nationals @ New York Mets,TOTALS,UNDER,57.9,8.5,9.0,OVER,False,False
+822941,2026-08-15,Baltimore Orioles @ Tampa Bay Rays,MONEYLINE,Tampa Bay Rays,60.7,0.0,4 a 3 (V-L),away,False,False
+822941,2026-08-15,Baltimore Orioles @ Tampa Bay Rays,TOTALS,OVER,58.7,7.5,7.0,UNDER,False,False
+824480,2026-08-15,Miami Marlins @ Cincinnati Reds,MONEYLINE,Miami Marlins,52.0,0.0,8 a 4 (V-L),away,True,False
+824480,2026-08-15,Miami Marlins @ Cincinnati Reds,TOTALS,UNDER,53.9,9.0,12.0,OVER,False,False
+824157,2026-08-15,Seattle Mariners @ Houston Astros,MONEYLINE,Houston Astros,50.3,0.0,10 a 5 (V-L),away,False,False
+824157,2026-08-15,Seattle Mariners @ Houston Astros,TOTALS,UNDER,68.2,8.5,15.0,OVER,False,False
+823671,2026-08-15,Philadelphia Phillies @ Minnesota Twins,MONEYLINE,Philadelphia Phillies,54.4,0.0,9 a 1 (V-L),away,True,False
+823671,2026-08-15,Philadelphia Phillies @ Minnesota Twins,TOTALS,UNDER,55.7,8.0,10.0,OVER,False,False
+823347,2026-08-15,Boston Red Sox @ Pittsburgh Pirates,MONEYLINE,Boston Red Sox,51.3,0.0,4 a 0 (V-L),away,True,False
+823347,2026-08-15,Boston Red Sox @ Pittsburgh Pirates,TOTALS,OVER,53.8,7.5,4.0,UNDER,False,False
+824884,2026-08-15,Arizona Diamondbacks @ Atlanta Braves,MONEYLINE,Arizona Diamondbacks,50.8,0.0,10 a 3 (V-L),away,True,False
+824884,2026-08-15,Arizona Diamondbacks @ Atlanta Braves,TOTALS,UNDER,90.3,9.0,13.0,OVER,False,False
+823914,2026-08-15,Milwaukee Brewers @ Los Angeles Dodgers,MONEYLINE,Milwaukee Brewers,51.0,0.0,4 a 1 (V-L),away,True,False
+823914,2026-08-15,Milwaukee Brewers @ Los Angeles Dodgers,TOTALS,UNDER,71.2,7.5,5.0,UNDER,True,False
+823990,2026-08-15,Kansas City Royals @ Los Angeles Angels,MONEYLINE,Los Angeles Angels,50.3,0.0,0 a 1 (V-L),home,True,False
+823990,2026-08-15,Kansas City Royals @ Los Angeles Angels,TOTALS,UNDER,81.4,8.0,1.0,UNDER,True,False
+824966,2026-08-15,Texas Rangers @ Athletics,MONEYLINE,Texas Rangers,54.2,0.0,5 a 3 (V-L),away,True,False
+824966,2026-08-15,Texas Rangers @ Athletics,TOTALS,UNDER,67.3,9.5,8.0,UNDER,True,False

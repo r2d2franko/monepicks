@@ -1,12 +1,12 @@
 {
   "date": "2026-08-09",
   "version": 1,
-  "content_hash": "forced-v1-hash",
+  "content_hash": "b879c11965e3da71e10dd7d8fafca8d69785397269e60ee65e513fee5803c04a",
   "total_games": 30,
   "ready_games": 24,
   "status_breakdown": {
     "READY": 24,
     "WAITING_FOR_STARTER": 6
   },
-  "generated_at": "2026-08-09T12:22:37.060529"
+  "generated_at": "2026-08-09T04:13:58.399125"
 }

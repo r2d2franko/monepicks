@@ -97,12 +97,22 @@ export function PredictionCard({ prediction, index }) {
             <strong style={{ color: isNoPlay ? 'var(--text-muted)' : 'var(--accent)' }}>
               {isNoPlay ? 'N/A' : prediction.prediccion_normalizada}
             </strong> 
-            {!isNoPlay && (
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}> 
-                ({prediction.mercado === 'Ganador del partido' ? 'Solidez' : 'Prob'}: {prob}%)
-              </span>
-            )}
           </p>
+          
+          {!isNoPlay && prediction.mercado === 'Ganador del partido' ? (
+             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.35rem', marginBottom: '0.35rem' }}>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px', border: '1px solid var(--card-border)' }}>
+                  Probabilidad: <strong style={{color: 'var(--text-main)'}}>{prediction.probabilidad_pura || 0}%</strong>
+                </span>
+                <span style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px', border: '1px solid var(--card-border)' }}>
+                  Solidez: <strong style={{color: 'var(--text-main)'}}>{prob}%</strong>
+                </span>
+             </div>
+          ) : !isNoPlay && (
+             <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', display: 'block', marginTop: '0.25rem', marginBottom: '0.25rem' }}> 
+               Probabilidad: {prob}%
+             </span>
+          )}
           
           {/* Barra de probabilidad visual */}
           {!isNoPlay && prob > 0 && (
@@ -207,7 +217,7 @@ export function PredictionCard({ prediction, index }) {
                     <p style={{ fontWeight: 600, margin: 0, color: badgeColor }}>{prediction.evaluacion_es}</p>
                     <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
                       {prediction.mercado === 'Ganador del partido' 
-                        ? `Solidez del Modelo: ${prob}%` 
+                        ? `Probabilidad: ${prediction.probabilidad_pura || 0}% | Solidez del Modelo: ${prob}%` 
                         : `Probabilidad: ${prob}% (Solidez: ${prediction.solidez_modelo || 0})`}
                     </p>
                   </>

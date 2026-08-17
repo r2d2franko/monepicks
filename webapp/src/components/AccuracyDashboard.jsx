@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Calendar, Search } from 'lucide-react';
-import { loadAccuracy } from '../utils/csvParser';
+import { loadAccuracy, getLocalDateString } from '../utils/csvParser';
 import { getTeamLogo } from '../utils/getMlbLogo';
 
 export function AccuracyDashboard() {
-  const getYesterdayString = () => {
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
-    return d.toISOString().split('T')[0];
-  };
-
-  const [selectedDate, setSelectedDate] = useState(getYesterdayString());
+  const [selectedDate, setSelectedDate] = useState(() => getLocalDateString());
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
