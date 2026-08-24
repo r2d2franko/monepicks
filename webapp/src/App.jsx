@@ -72,7 +72,7 @@ function App() {
   const stats = useMemo(() => {
     const total = predictions.length;
     const fav5 = predictions.filter(p => p.evaluacion_es && p.evaluacion_es.startsWith('⭐⭐⭐⭐⭐')).length;
-    const noPlay = predictions.filter(p => p.evaluacion_es === 'NO_PLAY').length;
+    const noPlay = predictions.filter(p => p.evaluacion_es && p.evaluacion_es.startsWith('NO_PLAY')).length;
     const ganador = predictions.filter(p => p.mercado === 'Ganador del partido').length;
     const ponches = predictions.filter(p => p.mercado && p.mercado.includes('Ponches')).length;
     return { total, fav5, noPlay, ganador, ponches };
@@ -92,8 +92,8 @@ function App() {
   const filteredPredictions = useMemo(() => {
     let result = predictions;
 
-    // Ocultar NO_PLAY
-    if (hideNoPlay) result = result.filter(p => p.evaluacion_es !== 'NO_PLAY');
+    // Ocultar NO_PLAY (y opcionalmente WAITING)
+    if (hideNoPlay) result = result.filter(p => !p.isNoPlay);
 
     // Filtro por texto
     if (searchTerm) {
@@ -110,7 +110,7 @@ function App() {
       if (marketFilter === 'ponches') {
         result = result.filter(p => p.mercado && p.mercado.includes('Ponches'));
       } else {
-        result = result.filter(p => p.mercado === marketFilter);
+        result = result.filter(p => p.mercado === marketFilter || p.mercado_es === marketFilter);
       }
     }
 

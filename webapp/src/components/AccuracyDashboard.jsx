@@ -51,7 +51,9 @@ export function AccuracyDashboard() {
   }, [results, searchTerm, marketFilter, teamFilter]);
 
   const stats = useMemo(() => {
-    const valid = filteredResults.filter(r => !r.is_push && r.actual_outcome);
+    // Para el nuevo formato, is_push y is_correct ya vienen como booleanos correctos
+    // Para el histórico, también vienen parseados
+    const valid = filteredResults.filter(r => !r.is_push && (r.actual_outcome || r.actual_result));
     const total = valid.length;
     const correct = valid.filter(r => r.is_correct).length;
     const incorrect = total - correct;
@@ -288,10 +290,16 @@ export function AccuracyDashboard() {
                       </td>
                       <td>
                         {r.line_value > 0 && <span style={{ color: 'var(--text-muted)', marginRight: '6px', display: 'block', fontSize: '0.8rem' }}>Línea: {r.line_value}</span>}
-                        {r.actual_value !== undefined && <span style={{ fontWeight: 600 }}>Real: {r.actual_value}</span>}
+                        {/* actual_value puede ser marcador texto (nuevo) o número (histórico) */}
+                        {r.actual_value !== undefined && r.actual_value !== '' && (
+                          <span style={{ fontWeight: 600 }}>{r.actual_value}</span>
+                        )}
                       </td>
                       <td>
-                        {renderTarget(r.actual_outcome)}
+                        {/* actual_outcome: texto del resultado (nuevo) o home/away/OVER/UNDER (histórico) */}
+                        {r.actual_outcome
+                          ? <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{r.actual_outcome}</span>
+                          : renderTarget(r.actual_outcome)}
                       </td>
                       <td>
                         {r.is_push ? (
