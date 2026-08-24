@@ -56,14 +56,36 @@ export function AccuracyDashboard() {
     const correct = valid.filter(r => r.is_correct).length;
     const incorrect = total - correct;
     const winRate = total > 0 ? ((correct / total) * 100).toFixed(1) : 0;
-    const pushes = results.filter(r => r.is_push).length;
+    const pushes = filteredResults.filter(r => r.is_push).length;
 
-    const moneylineValid = valid.filter(r => r.market === 'MONEYLINE');
+    // Filtramos la base por búsqueda y por equipo, pero no por el tipo de mercado, para poder calcular
+    // los porcentajes individuales independientemente del filtro de mercado seleccionado.
+    const baseWithTeamAndSearch = results.filter(r => {
+      if (searchTerm && !r.matchup?.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+      if (teamFilter !== 'all' && !r.matchup?.includes(teamFilter)) return false;
+      return true;
+    });
+
+    const moneylineValid = baseWithTeamAndSearch.filter(r => r.market === 'MONEYLINE' && !r.is_push && r.actual_outcome);
     const mlCorrect = moneylineValid.filter(r => r.is_correct).length;
     const mlWinRate = moneylineValid.length > 0 ? Math.round((mlCorrect / moneylineValid.length) * 100) : 0;
 
-    return { total, correct, incorrect, winRate, pushes, mlWinRate, mlTotal: moneylineValid.length };
-  }, [filteredResults]);
+    const totalsValid = baseWithTeamAndSearch.filter(r => r.market === 'TOTALS' && !r.is_push && r.actual_outcome);
+    const totalsCorrect = totalsValid.filter(r => r.is_correct).length;
+    const totalsWinRate = totalsValid.length > 0 ? Math.round((totalsCorrect / totalsValid.length) * 100) : 0;
+
+    return { 
+      total, 
+      correct, 
+      incorrect, 
+      winRate, 
+      pushes, 
+      mlWinRate, 
+      mlTotal: moneylineValid.length,
+      totalsWinRate,
+      totalsTotal: totalsValid.length
+    };
+  }, [results, filteredResults, searchTerm, teamFilter]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -175,7 +197,7 @@ export function AccuracyDashboard() {
       ) : (
         <>
           {/* Dashboard Stats */}
-          <div className="stats-bar animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', background: 'var(--card-bg)' }}>
+          <div className="stats-bar animate-fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1rem', background: 'var(--card-bg)' }}>
             <div style={{ textAlign: 'center', padding: '0.5rem' }}>
               <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate Global</p>
               <p style={{ margin: 0, fontSize: '1.75rem', fontWeight: 800, color: stats.winRate >= 55 ? 'var(--success)' : 'var(--text-main)' }}>
@@ -195,8 +217,12 @@ export function AccuracyDashboard() {
               <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--danger)' }}>❌ {stats.incorrect}</p>
             </div>
             <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate (Ganador)</p>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate Ganador</p>
               <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{stats.mlWinRate}% <span style={{ fontSize: '0.8rem' }}>({stats.mlTotal})</span></p>
+            </div>
+            <div style={{ textAlign: 'center', padding: '0.5rem' }}>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate Más/Menos</p>
+              <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{stats.totalsWinRate}% <span style={{ fontSize: '0.8rem' }}>({stats.totalsTotal})</span></p>
             </div>
           </div>
 

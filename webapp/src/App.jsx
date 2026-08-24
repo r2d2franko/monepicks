@@ -256,9 +256,11 @@ function App() {
                 </div>
               </div>
 
-              {/* Filtros por mercado */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {/* Filtros por mercado, evaluación y NO PLAY */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                {/* Mercados */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', minWidth: '80px' }}>Mercado:</span>
                   <div className="filter-chips">
                     {MARKET_CHIPS.map(c => (
                       <button
@@ -272,9 +274,45 @@ function App() {
                   </div>
                 </div>
 
+                {/* Confianza / Evaluación */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', minWidth: '80px' }}>Evaluación:</span>
+                  <div className="filter-chips">
+                    {STAR_CHIPS.map(c => (
+                      <button
+                        key={c.value}
+                        className={'chip' + (starFilter === c.value ? ' active' : '')}
+                        onClick={() => setStarFilter(c.value)}
+                      >
+                        {c.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mostrar / Ocultar NO PLAY */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', minWidth: '80px' }}>Opciones:</span>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.85rem', color: 'var(--text-main)' }}>
+                    <input
+                      type="checkbox"
+                      checked={!hideNoPlay}
+                      onChange={(e) => setHideNoPlay(!e.target.checked)}
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        accentColor: 'var(--accent)',
+                        cursor: 'pointer'
+                      }}
+                    />
+                    <span>Mostrar picks marcados como <strong style={{ color: 'var(--danger)' }}>NO PLAY</strong></span>
+                  </label>
+                </div>
+
                 {/* Filtro por equipo (Logos) */}
                 {uniqueTeams.length > 0 && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', minWidth: '80px' }}>Equipo:</span>
                     <div style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.5rem', alignItems: 'center' }}>
                       <button
                         onClick={() => setTeamFilter('all')}
