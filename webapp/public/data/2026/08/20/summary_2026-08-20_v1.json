@@ -1,0 +1,13 @@
+{
+  "date": "2026-08-20",
+  "version": 1,
+  "content_hash": "2fc0927d3f405ced2e6690fd7187ae60a830e16bc63bf39ffa3185e214e0df82",
+  "total_games": 18,
+  "ready_games": 6,
+  "status_breakdown": {
+    "FINAL": 6,
+    "IN_PROGRESS": 6,
+    "READY": 6
+  },
+  "generated_at": "2026-08-20T10:36:41.085644"
+}

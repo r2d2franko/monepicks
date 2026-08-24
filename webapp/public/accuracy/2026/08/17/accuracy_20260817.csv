@@ -1,0 +1,23 @@
+game_id,date,matchup,market,target,probability_pct,line_value,actual_value,actual_outcome,is_correct,is_push
+824514,2026-08-17,St. Louis Cardinals @ Cincinnati Reds,MONEYLINE,Cincinnati Reds,52.3,0.0,2 a 1 (V-L),away,False,False
+824514,2026-08-17,St. Louis Cardinals @ Cincinnati Reds,TOTALS,UNDER,70.4,9.5,3.0,UNDER,True,False
+824478,2026-08-17,St. Louis Cardinals @ Cincinnati Reds,MONEYLINE,St. Louis Cardinals,73.2,0.0,5 a 6 (V-L),home,False,False
+824478,2026-08-17,St. Louis Cardinals @ Cincinnati Reds,TOTALS,UNDER,74.6,9.5,11.0,OVER,False,False
+822939,2026-08-17,Baltimore Orioles @ Tampa Bay Rays,MONEYLINE,Tampa Bay Rays,54.9,0.0,6 a 7 (V-L),home,True,False
+822939,2026-08-17,Baltimore Orioles @ Tampa Bay Rays,TOTALS,UNDER,53.0,7.5,13.0,OVER,False,False
+823427,2026-08-17,Miami Marlins @ Philadelphia Phillies,MONEYLINE,Philadelphia Phillies,60.8,0.0,5 a 6 (V-L),home,True,False
+823427,2026-08-17,Miami Marlins @ Philadelphia Phillies,TOTALS,UNDER,73.9,8.0,11.0,OVER,False,False
+823343,2026-08-17,Detroit Tigers @ Pittsburgh Pirates,MONEYLINE,Pittsburgh Pirates,57.6,0.0,8 a 5 (V-L),away,False,False
+823343,2026-08-17,Detroit Tigers @ Pittsburgh Pirates,TOTALS,UNDER,52.9,8.0,13.0,OVER,False,False
+824725,2026-08-17,Arizona Diamondbacks @ Boston Red Sox,MONEYLINE,Boston Red Sox,57.3,0.0,1 a 11 (V-L),home,True,False
+824725,2026-08-17,Arizona Diamondbacks @ Boston Red Sox,TOTALS,UNDER,78.1,9.0,12.0,OVER,False,False
+823589,2026-08-17,San Diego Padres @ New York Mets,MONEYLINE,New York Mets,54.0,0.0,1 a 2 (V-L),home,True,False
+823589,2026-08-17,San Diego Padres @ New York Mets,TOTALS,UNDER,59.6,8.0,3.0,UNDER,True,False
+824077,2026-08-17,Athletics @ Kansas City Royals,MONEYLINE,Kansas City Royals,71.9,0.0,5 a 9 (V-L),home,True,False
+824077,2026-08-17,Athletics @ Kansas City Royals,TOTALS,OVER,58.2,9.0,14.0,OVER,True,False
+823668,2026-08-17,Atlanta Braves @ Minnesota Twins,MONEYLINE,Atlanta Braves,69.7,0.0,2 a 4 (V-L),home,False,False
+823668,2026-08-17,Atlanta Braves @ Minnesota Twins,TOTALS,UNDER,68.5,9.0,6.0,UNDER,True,False
+824641,2026-08-17,Chicago White Sox @ Chicago Cubs,MONEYLINE,Chicago Cubs,57.3,0.0,5 a 7 (V-L),home,True,False
+824641,2026-08-17,Chicago White Sox @ Chicago Cubs,TOTALS,OVER,63.8,8.0,12.0,OVER,True,False
+824320,2026-08-17,Los Angeles Dodgers @ Colorado Rockies,MONEYLINE,Los Angeles Dodgers,53.7,0.0,11 a 5 (V-L),away,True,False
+824320,2026-08-17,Los Angeles Dodgers @ Colorado Rockies,TOTALS,UNDER,66.4,10.5,16.0,OVER,False,False
