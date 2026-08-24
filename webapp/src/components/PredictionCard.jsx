@@ -85,21 +85,21 @@ export function PredictionCard({ prediction, index }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-          {!isNoPlay && prediction.evaluacion_es && (
+          {prediction.evaluacion_es && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: badgeColor, flexShrink: 0 }}></span>
-              <span style={{ fontSize: '0.8rem', color: badgeColor, fontWeight: 600 }}>{prediction.evaluacion_es}</span>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: isNoPlay ? 'var(--danger)' : badgeColor, flexShrink: 0 }}></span>
+              <span style={{ fontSize: '0.8rem', color: isNoPlay ? 'var(--danger)' : badgeColor, fontWeight: 600 }}>{prediction.evaluacion_es}</span>
             </div>
           )}
           
           <p style={{ fontSize: '0.875rem', margin: 0 }}>
             <span style={{ color: 'var(--text-muted)' }}>Pick: </span>
             <strong style={{ color: isNoPlay ? 'var(--text-muted)' : 'var(--accent)' }}>
-              {isNoPlay ? 'N/A' : prediction.prediccion_normalizada}
+              {prediction.prediccion_normalizada || 'N/A'}
             </strong> 
           </p>
           
-          {!isNoPlay && prediction.mercado === 'Ganador del partido' ? (
+          {prediction.mercado === 'Ganador del partido' ? (
              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.35rem', marginBottom: '0.35rem' }}>
                 <span style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px', border: '1px solid var(--card-border)' }}>
                   Probabilidad: <strong style={{color: 'var(--text-main)'}}>{prediction.probabilidad_pura || 0}%</strong>
@@ -108,14 +108,14 @@ export function PredictionCard({ prediction, index }) {
                   Solidez: <strong style={{color: 'var(--text-main)'}}>{prob}%</strong>
                 </span>
              </div>
-          ) : !isNoPlay && (
+          ) : (
              <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', display: 'block', marginTop: '0.25rem', marginBottom: '0.25rem' }}> 
                Probabilidad: {prob}%
              </span>
           )}
           
           {/* Barra de probabilidad visual */}
-          {!isNoPlay && prob > 0 && (
+          {prob > 0 && (
             <div className="prob-bar-wrapper">
               <div
                 className="prob-bar-fill"
@@ -205,25 +205,21 @@ export function PredictionCard({ prediction, index }) {
               <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Selección / Pick</p>
                 <p style={{ fontWeight: 700, margin: 0, color: isNoPlay ? 'var(--text-muted)' : 'var(--accent)', fontSize: '1.1rem' }}>
-                  {isNoPlay ? 'NO RECOMENDADA' : prediction.prediccion_normalizada}
+                  {prediction.prediccion_normalizada || 'N/A'}
                 </p>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>Mercado: {prediction.mercado_es || prediction.mercado}</p>
               </div>
               
               <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px' }}>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: '0 0 0.25rem 0', textTransform: 'uppercase' }}>Evaluación del Modelo</p>
-                {!isNoPlay ? (
-                  <>
-                    <p style={{ fontWeight: 600, margin: 0, color: badgeColor }}>{prediction.evaluacion_es}</p>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
-                      {prediction.mercado === 'Ganador del partido' 
-                        ? `Probabilidad: ${prediction.probabilidad_pura || 0}% | Solidez del Modelo: ${prob}%` 
-                        : `Probabilidad: ${prob}% (Solidez: ${prediction.solidez_modelo || 0})`}
-                    </p>
-                  </>
-                ) : (
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: 0 }}>No hay evaluación suficiente para apostar.</p>
-                )}
+                <p style={{ fontWeight: 600, margin: 0, color: isNoPlay ? 'var(--danger)' : badgeColor }}>
+                  {isNoPlay ? 'NO RECOMENDADO (NO PLAY)' : prediction.evaluacion_es}
+                </p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
+                  {prediction.mercado === 'Ganador del partido' 
+                    ? `Probabilidad: ${prediction.probabilidad_pura || 0}% | Solidez del Modelo: ${prob}%` 
+                    : `Probabilidad: ${prob}% (Solidez: ${prediction.solidez_modelo || 0})`}
+                </p>
               </div>
 
               <div style={{ background: 'var(--card-bg)', padding: '1rem', borderRadius: '8px', gridColumn: '1 / -1' }}>
