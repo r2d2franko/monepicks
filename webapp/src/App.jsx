@@ -13,6 +13,7 @@ const MARKET_CHIPS = [
   { label: 'Todos', value: 'all' },
   { label: '🏆 Ganador', value: 'Ganador del partido' },
   { label: '📊 Más/Menos', value: 'Más/Menos carreras' },
+  { label: '🎯 Total Equipo', value: 'Total de Equipo' },
   { label: '⚾ Ponches', value: 'ponches' }, // cubre Ponches (Local) y Ponches (Visitante)
 ];
 
@@ -131,10 +132,10 @@ function App() {
       const starCount = (s) => (s?.match(/⭐/g) || []).length;
       result = [...result].sort((a, b) => starCount(b.evaluacion_es) - starCount(a.evaluacion_es));
     } else if (sortBy === 'market') {
-      const order = { 'Ganador del partido': 0, 'Más/Menos carreras': 1 };
+      const order = { 'Ganador del partido': 0, 'Más/Menos carreras': 1, 'Total de Equipo': 2 };
       result = [...result].sort((a, b) => {
-        const ai = a.mercado?.includes('Ponches') ? 2 : (order[a.mercado] ?? 3);
-        const bi = b.mercado?.includes('Ponches') ? 2 : (order[b.mercado] ?? 3);
+        const ai = a.mercado?.includes('Ponches') ? 3 : (order[a.mercado_es] ?? 4);
+        const bi = b.mercado?.includes('Ponches') ? 3 : (order[b.mercado_es] ?? 4);
         return ai - bi;
       });
     } else if (sortBy === 'partido') {

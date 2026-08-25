@@ -59,7 +59,7 @@ export function PredictionCard({ prediction, index }) {
             )}
           </div>
           <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', color: 'var(--text-muted)' }}>
-            {prediction.mercado_es || prediction.mercado}
+            {prediction.mercado || prediction.mercado_es}
           </span>
         </div>
 

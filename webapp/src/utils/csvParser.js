@@ -20,7 +20,14 @@ const normalizeNewFormat = (rows) => {
     const equipo_visitante = parts[0]?.trim() || '';
     const equipo_local = parts[1]?.trim() || '';
 
-    const mercado = MARKET_MAP[row.market] || row.market;
+    let mercado = MARKET_MAP[row.market] || row.market;
+    let mercado_es = mercado;
+
+    if (row.market?.startsWith('TEAM_TOTAL_')) {
+      mercado_es = 'Total de Equipo';
+      const isHome = row.market.includes('_HOME_');
+      mercado = `Total ${isHome ? 'Local' : 'Visitante'} (${row.market_line})`;
+    }
     const status = row.status?.trim();
     const evaluation = row.evaluation?.trim();
     const isWaiting = status === 'WAITING_FOR_STARTER';
@@ -38,7 +45,7 @@ const normalizeNewFormat = (rows) => {
 
     // Pick normalizado
     let prediccion_normalizada = row.pick || '';
-    if (row.market === 'TOTALS' && row.pick !== 'N/A' && row.market_line && row.market_line !== 'N/A') {
+    if ((row.market === 'TOTALS' || row.market?.startsWith('TEAM_TOTAL_')) && row.pick !== 'N/A' && row.market_line && row.market_line !== 'N/A') {
       prediccion_normalizada = `${row.pick} ${row.market_line}`;
     }
 
@@ -60,7 +67,7 @@ const normalizeNewFormat = (rows) => {
       equipo_local,
       equipo_visitante,
       mercado,
-      mercado_es: mercado,
+      mercado_es,
       partido: row.matchup || '',
       abridor_local: row.home_pitcher || '',
       abridor_visitante: row.away_pitcher || '',
