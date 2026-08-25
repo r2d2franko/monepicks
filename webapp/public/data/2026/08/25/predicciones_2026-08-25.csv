@@ -1,0 +1,31 @@
+﻿game_id,date,matchup,home_pitcher,home_era,away_pitcher,away_era,market,pick,model_prob,model_confidence,market_line,evaluation,evaluation_es,status,actual_score,actual_result,updated_at
+824233,2026-08-25,Tampa Bay Rays @ Detroit Tigers,Jackson Jobe,4.5,Ian Seymour,4.17,MONEYLINE,Tampa Bay Rays,66.1%,0.0,N/A,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:44.898918
+824233,2026-08-25,Tampa Bay Rays @ Detroit Tigers,Jackson Jobe,4.5,Ian Seymour,4.17,TOTALS,OVER,61.8%,0.0,7.5,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:44.898934
+823826,2026-08-25,Boston Red Sox @ Miami Marlins,TBD (HOME),0.0,Payton Tolle,0.0,MONEYLINE,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.031111
+823826,2026-08-25,Boston Red Sox @ Miami Marlins,TBD (HOME),0.0,Payton Tolle,0.0,TOTALS,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.031126
+822693,2026-08-25,Colorado Rockies @ Washington Nationals,Andrew Alvarez,0.0,TBD (AWAY),0.0,MONEYLINE,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.162937
+822693,2026-08-25,Colorado Rockies @ Washington Nationals,Andrew Alvarez,0.0,TBD (AWAY),0.0,TOTALS,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.162955
+823505,2026-08-25,Houston Astros @ New York Yankees,Will Warren,4.43,Ethan Pecko,4.91,MONEYLINE,New York Yankees,57.6%,0.0,N/A,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:45.301411
+823505,2026-08-25,Houston Astros @ New York Yankees,Will Warren,4.43,Ethan Pecko,4.91,TOTALS,UNDER,64.7%,0.0,9.0,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:45.301431
+822773,2026-08-25,Kansas City Royals @ Toronto Blue Jays,Max Scherzer,7.4,Seth Lugo,4.71,MONEYLINE,Kansas City Royals,53.6%,52.45,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:45.434534
+822773,2026-08-25,Kansas City Royals @ Toronto Blue Jays,Max Scherzer,7.4,Seth Lugo,4.71,TOTALS,OVER,65.3%,77.84,8.5,LIGERA_VENTAJA,⭐⭐⭐ Ligera ventaja,READY,,,2026-08-25T14:37:45.434546
+823585,2026-08-25,Milwaukee Brewers @ New York Mets,Zac Thornton,3.04,Kyle Harrison,2.84,MONEYLINE,Milwaukee Brewers,52.0%,37.99,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:45.580474
+823585,2026-08-25,Milwaukee Brewers @ New York Mets,Zac Thornton,3.04,Kyle Harrison,2.84,TOTALS,UNDER,71.0%,82.4,7.5,FAVORABLE,⭐⭐⭐⭐ Favorable,READY,,,2026-08-25T14:37:45.580488
+824881,2026-08-25,Los Angeles Dodgers @ Atlanta Braves,Bryce Elder,3.92,Tyler Glasnow,2.72,MONEYLINE,Los Angeles Dodgers,57.9%,0.0,N/A,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:45.730297
+824881,2026-08-25,Los Angeles Dodgers @ Atlanta Braves,Bryce Elder,3.92,Tyler Glasnow,2.72,TOTALS,UNDER,74.9%,0.0,8.5,NO_PLAY_PITCHER,⛔ No Play (Pitcher Novato),READY,,,2026-08-25T14:37:45.730316
+824556,2026-08-25,Texas Rangers @ Chicago White Sox,Anthony Kay,3.96,Jacob deGrom,3.77,MONEYLINE,Texas Rangers,51.6%,51.96,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:45.847579
+824556,2026-08-25,Texas Rangers @ Chicago White Sox,Anthony Kay,3.96,Jacob deGrom,3.77,TOTALS,UNDER,50.1%,50.08,7.5,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:45.847592
+823016,2026-08-25,Baltimore Orioles @ St. Louis Cardinals,TBD (HOME),0.0,Chris Bassitt,0.0,MONEYLINE,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.987163
+823016,2026-08-25,Baltimore Orioles @ St. Louis Cardinals,TBD (HOME),0.0,Chris Bassitt,0.0,TOTALS,N/A,N/A,N/A,N/A,N/A,N/A,WAITING_FOR_STARTER,,,2026-08-25T14:37:45.987175
+823989,2026-08-25,Cleveland Guardians @ Los Angeles Angels,Walbert Ureña,2.8,Gavin Williams,3.72,MONEYLINE,Cleveland Guardians,53.8%,66.99,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.145618
+823989,2026-08-25,Cleveland Guardians @ Los Angeles Angels,Walbert Ureña,2.8,Gavin Williams,3.72,TOTALS,UNDER,73.3%,98.64,7.5,FAVORITO_FUERTE,⭐⭐⭐⭐⭐ Favorito fuerte,READY,,,2026-08-25T14:37:46.145634
+825042,2026-08-25,Chicago Cubs @ Arizona Diamondbacks,Brandon Pfaadt,3.39,Clay Holmes,2.49,MONEYLINE,Arizona Diamondbacks,51.0%,44.18,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.273511
+825042,2026-08-25,Chicago Cubs @ Arizona Diamondbacks,Brandon Pfaadt,3.39,Clay Holmes,2.49,TOTALS,UNDER,78.3%,92.8,8.0,FAVORITO_FUERTE,⭐⭐⭐⭐⭐ Favorito fuerte,READY,,,2026-08-25T14:37:46.273525
+823259,2026-08-25,Pittsburgh Pirates @ San Diego Padres,Michael King,3.38,Paul Skenes,3.95,MONEYLINE,San Diego Padres,52.6%,66.23,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.423665
+823259,2026-08-25,Pittsburgh Pirates @ San Diego Padres,Michael King,3.38,Paul Skenes,3.95,TOTALS,UNDER,56.3%,77.54,7.5,LIGERA_VENTAJA,⭐⭐⭐ Ligera ventaja,READY,,,2026-08-25T14:37:46.423677
+824962,2026-08-25,Minnesota Twins @ Athletics,Gage Jump,4.83,Taj Bradley,3.9,MONEYLINE,Minnesota Twins,53.0%,59.31,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.557962
+824962,2026-08-25,Minnesota Twins @ Athletics,Gage Jump,4.83,Taj Bradley,3.9,TOTALS,UNDER,55.5%,60.7,9.5,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.557974
+823098,2026-08-25,Philadelphia Phillies @ Seattle Mariners,George Kirby,4.18,Aaron Nola,5.12,MONEYLINE,Philadelphia Phillies,55.5%,67.82,N/A,PARTIDO_CERRADO,⭐ Partido cerrado,READY,,,2026-08-25T14:37:46.708645
+823098,2026-08-25,Philadelphia Phillies @ Seattle Mariners,George Kirby,4.18,Aaron Nola,5.12,TOTALS,OVER,68.6%,94.88,7.5,FAVORITO_FUERTE,⭐⭐⭐⭐⭐ Favorito fuerte,READY,,,2026-08-25T14:37:46.708658
+823181,2026-08-25,Cincinnati Reds @ San Francisco Giants,Adrian Houser,4.08,Brady Singer,4.72,MONEYLINE,San Francisco Giants,62.3%,72.42,N/A,LIGERA_VENTAJA,⭐⭐⭐ Ligera ventaja,READY,,,2026-08-25T14:37:46.856490
+823181,2026-08-25,Cincinnati Reds @ San Francisco Giants,Adrian Houser,4.08,Brady Singer,4.72,TOTALS,OVER,56.7%,70.66,8.0,LIGERA_VENTAJA,⭐⭐⭐ Ligera ventaja,READY,,,2026-08-25T14:37:46.856501
