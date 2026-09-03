@@ -70,22 +70,22 @@ export function PredictionCard({ prediction, index }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-            <img src={localLogo} alt={localName} style={{ width: '64px', height: '64px', objectFit: 'contain', marginBottom: '0.5rem' }} />
-            <span style={{ fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>{localName}</span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.25rem' }}>
-              {prediction.abridor_local || prediction.home_pitcher || 'TBD'} <br/> (ERA: {prediction.era_local ?? prediction.home_era ?? '-'})
-            </span>
-          </div>
-          
-          <div style={{ padding: '0 1rem', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-muted)' }}>
-            VS
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
             <img src={visitaLogo} alt={visitaName} style={{ width: '64px', height: '64px', objectFit: 'contain', marginBottom: '0.5rem' }} />
             <span style={{ fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>{visitaName}</span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.25rem' }}>
               {prediction.abridor_visitante || prediction.away_pitcher || 'TBD'} <br/> (ERA: {prediction.era_visitante ?? prediction.away_era ?? '-'})
+            </span>
+          </div>
+          
+          <div style={{ padding: '0 1rem', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-muted)' }}>
+            @
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+            <img src={localLogo} alt={localName} style={{ width: '64px', height: '64px', objectFit: 'contain', marginBottom: '0.5rem' }} />
+            <span style={{ fontSize: '0.9rem', fontWeight: 600, textAlign: 'center' }}>{localName}</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '0.25rem' }}>
+              {prediction.abridor_local || prediction.home_pitcher || 'TBD'} <br/> (ERA: {prediction.era_local ?? prediction.home_era ?? '-'})
             </span>
           </div>
         </div>
@@ -240,12 +240,12 @@ export function PredictionCard({ prediction, index }) {
                 {prediction.mercado === 'Ganador del partido' && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)', padding: '0.75rem', borderRadius: '6px' }}>
                     <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid var(--card-border)' }}>
-                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{localName}</span>
-                      <span style={{ fontWeight: 'bold' }}>{prediction.probabilidad_local || '-'}</span>
-                    </div>
-                    <div style={{ textAlign: 'center', flex: 1 }}>
                       <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{visitaName}</span>
                       <span style={{ fontWeight: 'bold' }}>{prediction.probabilidad_visitante || '-'}</span>
+                    </div>
+                    <div style={{ textAlign: 'center', flex: 1 }}>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)' }}>{localName}</span>
+                      <span style={{ fontWeight: 'bold' }}>{prediction.probabilidad_local || '-'}</span>
                     </div>
                   </div>
                 )}

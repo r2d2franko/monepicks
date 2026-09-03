@@ -50,6 +50,23 @@ export function AccuracyDashboard() {
     return filtered;
   }, [results, searchTerm, marketFilter, teamFilter]);
 
+  const marketChips = useMemo(() => {
+    const markets = new Set();
+    results.forEach(r => {
+      if (r.market) markets.add(r.market);
+    });
+    return ['all', ...Array.from(markets).sort()];
+  }, [results]);
+
+  const getMarketLabel = (market) => {
+    if (market === 'all') return 'Todos';
+    if (market === 'MONEYLINE') return '🏆 Ganador';
+    if (market === 'TOTALS') return '📊 O/U';
+    if (market?.startsWith('TEAM_TOTAL_')) return '🎯 Total Eq.';
+    if (market?.includes('Ponches')) return '⚾ Ponches';
+    return `🆕 ${market}`;
+  };
+
   const stats = useMemo(() => {
     // Para el nuevo formato, is_push y is_correct ya vienen como booleanos correctos
     // Para el histórico, también vienen parseados
@@ -68,13 +85,23 @@ export function AccuracyDashboard() {
       return true;
     });
 
-    const moneylineValid = baseWithTeamAndSearch.filter(r => r.market === 'MONEYLINE' && !r.is_push && r.actual_outcome);
-    const mlCorrect = moneylineValid.filter(r => r.is_correct).length;
-    const mlWinRate = moneylineValid.length > 0 ? Math.round((mlCorrect / moneylineValid.length) * 100) : 0;
-
-    const totalsValid = baseWithTeamAndSearch.filter(r => r.market === 'TOTALS' && !r.is_push && r.actual_outcome);
-    const totalsCorrect = totalsValid.filter(r => r.is_correct).length;
-    const totalsWinRate = totalsValid.length > 0 ? Math.round((totalsCorrect / totalsValid.length) * 100) : 0;
+    const markets = new Set();
+    baseWithTeamAndSearch.forEach(r => {
+      if (r.market) markets.add(r.market);
+    });
+    
+    const marketStats = [];
+    markets.forEach(m => {
+      const mValid = baseWithTeamAndSearch.filter(r => r.market === m && !r.is_push && (r.actual_outcome || r.actual_result));
+      const mCorrect = mValid.filter(r => r.is_correct).length;
+      const mWinRate = mValid.length > 0 ? Math.round((mCorrect / mValid.length) * 100) : 0;
+      marketStats.push({
+        market: m,
+        winRate: mWinRate,
+        total: mValid.length
+      });
+    });
+    marketStats.sort((a, b) => b.total - a.total); // Sort by volume
 
     return { 
       total, 
@@ -82,10 +109,7 @@ export function AccuracyDashboard() {
       incorrect, 
       winRate, 
       pushes, 
-      mlWinRate, 
-      mlTotal: moneylineValid.length,
-      totalsWinRate,
-      totalsTotal: totalsValid.length
+      marketStats
     };
   }, [results, filteredResults, searchTerm, teamFilter]);
 
@@ -127,7 +151,7 @@ export function AccuracyDashboard() {
 
         {/* Filtros de Mercado */}
         <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-          {['all', 'MONEYLINE', 'TOTALS'].map(market => (
+          {marketChips.map(market => (
             <button
               key={market}
               onClick={() => setMarketFilter(market)}
@@ -145,7 +169,7 @@ export function AccuracyDashboard() {
                 transition: 'all 0.2s'
               }}
             >
-              {market === 'all' ? 'Todos' : market === 'MONEYLINE' ? '🏆 Ganador' : '📊 Más/Menos'}
+              {getMarketLabel(market)}
             </button>
           ))}
         </div>
@@ -218,14 +242,13 @@ export function AccuracyDashboard() {
               <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Fallos</p>
               <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--danger)' }}>❌ {stats.incorrect}</p>
             </div>
-            <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate Ganador</p>
-              <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{stats.mlWinRate}% <span style={{ fontSize: '0.8rem' }}>({stats.mlTotal})</span></p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Win Rate Más/Menos</p>
-              <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{stats.totalsWinRate}% <span style={{ fontSize: '0.8rem' }}>({stats.totalsTotal})</span></p>
-            </div>
+            
+            {stats.marketStats.map(ms => (
+              <div key={ms.market} style={{ textAlign: 'center', padding: '0.5rem' }}>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>WR {getMarketLabel(ms.market)}</p>
+                <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent)' }}>{ms.winRate}% <span style={{ fontSize: '0.8rem' }}>({ms.total})</span></p>
+              </div>
+            ))}
           </div>
 
           {/* Tabla Moderna */}
@@ -277,7 +300,7 @@ export function AccuracyDashboard() {
                       <td style={{ fontWeight: 600 }}>{r.matchup}</td>
                       <td>
                         <span className="market-badge">
-                          {r.market === 'MONEYLINE' ? '🏆 Ganador' : r.market === 'TOTALS' ? '📊 O/U' : r.market}
+                          {getMarketLabel(r.market)}
                         </span>
                       </td>
                       <td>

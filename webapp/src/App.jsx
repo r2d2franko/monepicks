@@ -8,14 +8,12 @@ import { getTeamLogo } from './utils/getMlbLogo';
 import { Search, Calendar, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import './styles/global.css';
 
-// Mapeo de mercados a etiquetas legibles y chips
-const MARKET_CHIPS = [
-  { label: 'Todos', value: 'all' },
-  { label: '🏆 Ganador', value: 'Ganador del partido' },
-  { label: '📊 Más/Menos', value: 'Más/Menos carreras' },
-  { label: '🎯 Total Equipo', value: 'Total de Equipo' },
-  { label: '⚾ Ponches', value: 'ponches' }, // cubre Ponches (Local) y Ponches (Visitante)
-];
+const MARKET_LABELS = {
+  'Ganador del partido': '🏆 Ganador',
+  'Más/Menos carreras': '📊 Más/Menos',
+  'Total de Equipo': '🎯 Total Equipo',
+  'ponches': '⚾ Ponches'
+};
 
 const STAR_CHIPS = [
   { label: 'Todas', value: 'all' },
@@ -87,6 +85,25 @@ function App() {
       if (p.equipo_visitante) teams.add(p.equipo_visitante);
     });
     return Array.from(teams).sort();
+  }, [predictions]);
+
+  // Mercados dinámicos
+  const marketChips = useMemo(() => {
+    const markets = new Set();
+    predictions.forEach(p => {
+      if (p.mercado && p.mercado.includes('Ponches')) {
+        markets.add('ponches');
+      } else if (p.mercado_es) {
+        markets.add(p.mercado_es);
+      } else if (p.mercado) {
+        markets.add(p.mercado);
+      }
+    });
+    const uniqueMarkets = Array.from(markets).sort();
+    return [
+      { label: 'Todos', value: 'all' },
+      ...uniqueMarkets.map(m => ({ label: MARKET_LABELS[m] || `🆕 ${m}`, value: m }))
+    ];
   }, [predictions]);
 
   // Filtrado y ordenamiento
@@ -263,7 +280,7 @@ function App() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', minWidth: '80px' }}>Mercado:</span>
                   <div className="filter-chips">
-                    {MARKET_CHIPS.map(c => (
+                    {marketChips.map(c => (
                       <button
                         key={c.value}
                         className={'chip' + (marketFilter === c.value ? ' active' : '')}
