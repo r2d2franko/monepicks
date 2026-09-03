@@ -35,6 +35,32 @@ export function AccuracyDashboard() {
     return Array.from(teams).sort();
   }, [results]);
 
+  const getMarketGroup = (market) => {
+    if (!market) return '';
+    if (market === 'MONEYLINE') return 'MONEYLINE';
+    if (market === 'TOTALS') return 'TOTALS';
+    if (market.startsWith('TEAM_TOTAL_')) return 'TEAM_TOTAL';
+    if (market.includes('Ponches')) return 'PONCHES';
+    return market;
+  };
+
+  const marketChips = useMemo(() => {
+    const markets = new Set();
+    results.forEach(r => {
+      if (r.market) markets.add(getMarketGroup(r.market));
+    });
+    return ['all', ...Array.from(markets).sort()];
+  }, [results]);
+
+  const getMarketLabel = (marketGroup) => {
+    if (marketGroup === 'all') return 'Todos';
+    if (marketGroup === 'MONEYLINE') return '🏆 Ganador';
+    if (marketGroup === 'TOTALS') return '📊 O/U';
+    if (marketGroup === 'TEAM_TOTAL') return '🎯 Total Eq.';
+    if (marketGroup === 'PONCHES') return '⚾ Ponches';
+    return `🆕 ${marketGroup}`;
+  };
+
   const filteredResults = useMemo(() => {
     let filtered = results;
     if (searchTerm) {
@@ -42,30 +68,13 @@ export function AccuracyDashboard() {
       filtered = filtered.filter(r => r.matchup?.toLowerCase().includes(term));
     }
     if (marketFilter !== 'all') {
-      filtered = filtered.filter(r => r.market === marketFilter);
+      filtered = filtered.filter(r => getMarketGroup(r.market) === marketFilter);
     }
     if (teamFilter !== 'all') {
       filtered = filtered.filter(r => r.matchup?.includes(teamFilter));
     }
     return filtered;
   }, [results, searchTerm, marketFilter, teamFilter]);
-
-  const marketChips = useMemo(() => {
-    const markets = new Set();
-    results.forEach(r => {
-      if (r.market) markets.add(r.market);
-    });
-    return ['all', ...Array.from(markets).sort()];
-  }, [results]);
-
-  const getMarketLabel = (market) => {
-    if (market === 'all') return 'Todos';
-    if (market === 'MONEYLINE') return '🏆 Ganador';
-    if (market === 'TOTALS') return '📊 O/U';
-    if (market?.startsWith('TEAM_TOTAL_')) return '🎯 Total Eq.';
-    if (market?.includes('Ponches')) return '⚾ Ponches';
-    return `🆕 ${market}`;
-  };
 
   const stats = useMemo(() => {
     // Para el nuevo formato, is_push y is_correct ya vienen como booleanos correctos
@@ -87,12 +96,12 @@ export function AccuracyDashboard() {
 
     const markets = new Set();
     baseWithTeamAndSearch.forEach(r => {
-      if (r.market) markets.add(r.market);
+      if (r.market) markets.add(getMarketGroup(r.market));
     });
     
     const marketStats = [];
     markets.forEach(m => {
-      const mValid = baseWithTeamAndSearch.filter(r => r.market === m && !r.is_push && (r.actual_outcome || r.actual_result));
+      const mValid = baseWithTeamAndSearch.filter(r => getMarketGroup(r.market) === m && !r.is_push && (r.actual_outcome || r.actual_result));
       const mCorrect = mValid.filter(r => r.is_correct).length;
       const mWinRate = mValid.length > 0 ? Math.round((mCorrect / mValid.length) * 100) : 0;
       marketStats.push({
@@ -270,9 +279,11 @@ export function AccuracyDashboard() {
                   const awayTeam = parts[0] || '';
                   const homeTeam = parts[1] || '';
 
+                  const group = getMarketGroup(r.market);
+
                   const renderTarget = (val) => {
                     if (!val) return '-';
-                    if (r.market === 'MONEYLINE') {
+                    if (group === 'MONEYLINE') {
                       const teamName = val === 'home' ? homeTeam : (val === 'away' ? awayTeam : val);
                       if (teamName === homeTeam || teamName === awayTeam) {
                         return (
@@ -282,7 +293,7 @@ export function AccuracyDashboard() {
                           </div>
                         );
                       }
-                    } else if (r.market === 'TOTALS') {
+                    } else if (val === 'OVER' || val === 'UNDER') {
                       return (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <span style={{ fontSize: '1.2rem', color: val === 'OVER' ? 'var(--success)' : 'var(--danger)' }}>
@@ -295,12 +306,24 @@ export function AccuracyDashboard() {
                     return <strong style={{ color: 'var(--text-main)' }}>{val}</strong>;
                   };
 
+                  const getDetailedMarketText = () => {
+                     if (group === 'TEAM_TOTAL') {
+                        const isHome = r.market.includes('_HOME');
+                        const teamName = isHome ? homeTeam : awayTeam;
+                        return `${getMarketLabel(group)} (${teamName})`;
+                     }
+                     if (group === 'PONCHES' && r.market !== 'PONCHES') {
+                        return r.market;
+                     }
+                     return getMarketLabel(group);
+                  };
+
                   return (
                     <tr key={i}>
                       <td style={{ fontWeight: 600 }}>{r.matchup}</td>
                       <td>
-                        <span className="market-badge">
-                          {getMarketLabel(r.market)}
+                        <span className="market-badge" style={{ whiteSpace: 'nowrap' }}>
+                          {getDetailedMarketText()}
                         </span>
                       </td>
                       <td>
